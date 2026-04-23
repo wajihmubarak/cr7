@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>منصة وجيه</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg,#1f1c2c,#928dab);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+}
+
+button {
+    width: 95%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.login { background: #00c6ff; color:white; }
+.register { background: #43e97b; color:white; }
+
+.switch {
+    margin-top: 10px;
+    cursor: pointer;
+    color: #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2 id="title">تسجيل الدخول</h2>
+
+<input type="text" id="username" placeholder="اسم المستخدم">
+<input type="password" id="password" placeholder="كلمة المرور">
+
+<button class="login" onclick="login()">دخول</button>
+<button class="register" onclick="register()">إنشاء حساب</button>
+
+<p class="switch" onclick="toggle()">تبديل بين تسجيل / دخول</p>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+let isLogin = true;
+
+function toggle() {
+    isLogin = !isLogin;
+    document.getElementById("title").innerText =
+        isLogin ? "تسجيل الدخول" : "إنشاء حساب";
+}
+
+function register() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if (!user || !pass) {
+        msg("❌ املأ البيانات");
+        return;
+    }
+
+    localStorage.setItem("user_" + user, pass);
+    msg("✅ تم إنشاء الحساب");
+}
+
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    let saved = localStorage.getItem("user_" + user);
+
+    if (saved === pass) {
+        msg("✅ تم تسجيل الدخول");
+    } else {
+        msg("❌ بيانات غلط");
+    }
+}
+
+function msg(text) {
+    document.getElementById("msg").innerText = text;
+}
+</script>
+
+</body>
+</html>
